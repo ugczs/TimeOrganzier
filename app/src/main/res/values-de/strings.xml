@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Zeit-Organisator</string>
+    <string name="menu_option">Optionen</string>
+    <string name="menu_about">Über</string>
+    <string name="menu_addEvent">Ereignis hinzufügen</string>
+    <string name="menu_timeUnit">Zeiteinheit</string>
+</resources>

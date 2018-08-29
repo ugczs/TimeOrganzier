@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Time Organzier</string>
+    <string name="menu_option">Options</string>
+    <string name="menu_about">About</string>
+    <string name="menu_addEvent">Add Event</string>
+    <string name="menu_timeUnit">Time Unit</string>
+</resources>
