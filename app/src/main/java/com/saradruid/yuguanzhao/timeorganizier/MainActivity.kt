@@ -1,6 +1,5 @@
 package com.saradruid.yuguanzhao.timeorganizier
 
-import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.NavigationView
@@ -11,12 +10,18 @@ import android.support.v7.widget.Toolbar
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
+import android.widget.ListView
 import com.saradruid.yuguanzhao.timeorganzier.R
+import java.util.*
+
+
 
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var mDrawerLayout: DrawerLayout
+    private lateinit var countDownList: ListView
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,15 +51,46 @@ class MainActivity : AppCompatActivity() {
                  when (menuItem.itemId) {
                     R.id.add -> {
                         Log.i("event menu add ","is clicked!")
+                        /*Log.i("event menu add ","is clicked!")
                         intent = Intent(this, DatePicker::class.java)
                         startActivity(intent)
-                        true
+                        true*/
+
+                        val fragment = ListFragment() // this fragment contains the list with all the "test" items
+
+                        // Insert the fragment by replacing any existing fragment
+                        val fragmentManager = fragmentManager
+                        fragmentManager.beginTransaction()
+                                .replace(R.id.content_frame, fragment)
+                                .commit()
                     }
                      R.id.about -> {
                          Log.i("event menu about","is clicked!")
+                        /* Log.i("event menu about","is clicked!")
                          intent = Intent(this, TimePicker::class.java)
                          startActivity(intent)
-                         true
+                         true*/
+                         val fragment = TimePicker() // this fragment contains the list with all the "test" items
+
+                         // Insert the fragment by replacing any existing fragment
+                         val fragmentManager = fragmentManager
+                         fragmentManager.beginTransaction()
+                                 .replace(R.id.content_frame, fragment)
+                                 .commit()
+                     }
+                     R.id.friends-> {
+                         Log.i("event menu unit","is clicked!")
+                         /* Log.i("event menu about","is clicked!")
+                          intent = Intent(this, TimePicker::class.java)
+                          startActivity(intent)
+                          true*/
+                         val fragment = DatePicker() // this fragment contains the list with all the "test" items
+
+                         // Insert the fragment by replacing any existing fragment
+                         val fragmentManager = fragmentManager
+                         fragmentManager.beginTransaction()
+                                 .replace(R.id.content_frame, fragment)
+                                 .commit()
                      }
                 }
                 true
@@ -80,7 +116,6 @@ class MainActivity : AppCompatActivity() {
                     }
             )
 
-       /* listView = findViewById(R.id.listView)*/
     }
 
 
@@ -95,23 +130,15 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-   /* override fun onCreateContextMenu(menu: ContextMenu, v: View,
-                                     menuInfo: ContextMenuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo)
-        menu.setHeaderTitle("Item Operations")
-        menu.add(0, v.id, 0, "Edit Item")
-        menu.add(0, v.id, 0, "Delete Item")
+    private fun selectItem(position: Int) {
+        // Create a new fragment and specify the planet to show based on position
+        val fragment = ListFragment() // this fragment contains the list with all the "test" items
+
+        // Insert the fragment by replacing any existing fragment
+        val fragmentManager = fragmentManager
+        fragmentManager.beginTransaction()
+                .replace(R.id.content_frame, fragment)
+                .commit()
+
     }
-
-    override fun onContextItemSelected(item: MenuItem): Boolean {
-        val info = item.menuInfo as AdapterContextMenuInfo
-        if (item.title === "Edit Item") {
-
-        }
-        else if (item.title === "Delete Item") {
-
-        }
-        return super.onContextItemSelected(item)
-    }*/
-
 }
