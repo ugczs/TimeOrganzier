@@ -18,7 +18,6 @@ import java.util.Locale;
 
 public class ScheduleFragment extends Fragment implements View.OnClickListener {
 
-    private FragmentCallback mCallback;
     private EditText editTime;
     private EditText editDate;
     private Button btTime;
@@ -82,7 +81,17 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener {
     }
 
     public void upDateTime(Time time) {
-        editTime.setText(time.getHour() + ":" + time.getMinute());
+        String hour = time.getHour();
+        String minute = time.getMinute();
+        int h = Integer.parseInt(hour);
+        int m = Integer.parseInt(minute);
+        if(h < 10) {
+            hour = String.format("%02d", h);
+        }
+        if(m < 10) {
+            minute = String.format("%02d", m);
+        }
+        editTime.setText(hour + ":" + minute);
     }
 
     public void upDateDate(Date date) {
@@ -90,9 +99,5 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener {
         DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT, current);
         String d = df.format(date);
         editDate.setText(d);
-    }
-
-    public void setCallback(FragmentCallback callback) {
-        mCallback = callback;
     }
 }

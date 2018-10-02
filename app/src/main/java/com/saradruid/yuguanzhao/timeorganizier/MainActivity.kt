@@ -10,21 +10,13 @@ import android.support.v7.widget.Toolbar
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
-import android.widget.EditText
 import com.saradruid.yuguanzhao.timeorganzier.R
-import java.text.DateFormat
-import android.icu.util.ULocale.getCountry
 import java.util.*
 
 
 class MainActivity : AppCompatActivity(), OnDataPass  {
     lateinit var mDrawerLayout: DrawerLayout
     var timeList = TimeList()
-
-    companion object {
-        var hour:Int = 11
-    }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,16 +32,12 @@ class MainActivity : AppCompatActivity(), OnDataPass  {
         }
         mDrawerLayout = findViewById(R.id.drawer_layout)
 
-
-
         val navigationView: NavigationView = findViewById(R.id.nav_view)
         navigationView.setNavigationItemSelectedListener { menuItem ->
                 // set item as selected to persist highlight
             menuItem.isChecked = false
                 // close drawer when item is tapped
             mDrawerLayout.closeDrawers()
-
-
 
                 // update  UI based on the item selected
                  when (menuItem.itemId) {
@@ -88,7 +76,6 @@ class MainActivity : AppCompatActivity(), OnDataPass  {
                         }
                     }
             )
-
     }
 
 
@@ -149,12 +136,12 @@ class MainActivity : AppCompatActivity(), OnDataPass  {
             else if (data is Date) {
                 fragment.upDateDate(data)
             }
+            else {
+                Log.i("onDataPass", "unknown data type")
+            }
         }
         else {
             Log.i("onDataPass", "data is null")
         }
-    }
-
-    private fun setUp() {
     }
 }

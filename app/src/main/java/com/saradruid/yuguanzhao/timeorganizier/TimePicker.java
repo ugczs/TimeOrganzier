@@ -18,7 +18,7 @@ import com.saradruid.yuguanzhao.timeorganzier.R;
 
 import java.util.Calendar;
 
-public class TimePicker extends Fragment implements FragmentCallback {
+public class TimePicker extends Fragment {
 
     private int pickedHour;
     private int pickedMinute;
@@ -71,10 +71,5 @@ public class TimePicker extends Fragment implements FragmentCallback {
 
     public void passData(Time data) {
         dataPasser.onDataPass(data);
-    }
-
-    @Override
-    public void buttonPressed(String value) {
-
     }
 }
