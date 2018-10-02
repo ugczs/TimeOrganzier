@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.app.Fragment;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,62 +21,68 @@ import java.util.TimeZone;
 
 public class DatePicker extends Fragment implements DatePickerDialog.OnDateSetListener {
 
-    private int day;
-    private int month;
-    private int birthYear;
-    private Context context;
+    private int pickedDay;
+    private int pickedMonth;
+    private int pickedYear;
+    private Date pickedDate;
+    private OnDataPass dataPasser;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_date_picker, container, false);
         Log.i("TimePicker ", "is created!");
 
-        final Calendar c = Calendar.getInstance();
-        int hour = c.get(Calendar.HOUR_OF_DAY);
-        int minute = c.get(Calendar.MINUTE);
-
         Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
 
         DatePickerDialog dialog = new DatePickerDialog(getActivity(), this,
                 calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
                 calendar.get(Calendar.DAY_OF_MONTH));
+
         dialog.setCancelable(false);
         dialog.show();
         return rootView;
     }
 
-   /* @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_time_picker);
-        Log.i("TimePicker ", "is created!");
-
-        Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
-
-        DatePickerDialog dialog = new DatePickerDialog(DatePicker.this, this,
-                calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
-                calendar.get(Calendar.DAY_OF_MONTH));
-        dialog.setCancelable(false);
-        dialog.show();
-    }*/
-
-
     @Override
     public void onDateSet(android.widget.DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-        birthYear = year;
-        month = monthOfYear;
-        day = dayOfMonth;
-        String date = "You picked the following Date: "+year+"."+monthOfYear+"." + dayOfMonth;
-        Log.i("date: ", date + "!");
+        this.pickedYear = year;
+        this.pickedMonth = monthOfYear;
+        this.pickedDay = dayOfMonth;
 
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.YEAR, year);
+        cal.set(Calendar.MONTH, monthOfYear);
+        cal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+        this.pickedDate = cal.getTime();
+
+        String date = year+"."+monthOfYear+"." + dayOfMonth;
+        Log.i("date: ", "You picked the following Date: " + date + "!");
+        passData(pickedDate);
     }
 
-    public int getCurrentYear() {
-        Date date = new Date();
-        Calendar calendar = new GregorianCalendar();
-        calendar.setTime(date);
-        int year = calendar.get(Calendar.YEAR);
-        return year;
+    public int getDay() {
+        return pickedDay;
     }
 
+    public int getMonth() {
+        return pickedMonth;
+    }
+
+    public int getYear() {
+        return pickedYear;
+    }
+
+    public Date getDate() {
+        return pickedDate;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        dataPasser = (OnDataPass) context;
+    }
+
+    public void passData(Object data) {
+        dataPasser.onDataPass(data);
+    }
 }

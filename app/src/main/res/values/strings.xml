@@ -1,5 +1,9 @@
 <resources>
-    <string name="app_name">Time Organzier</string>
+    <string name="set_time">set time</string>
+    <string name="set_date">set date</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="app_name">Time Reminder</string>
     <string name="menu_option">Options</string>
     <string name="menu_about">About</string>
     <string name="menu_addEvent">Add Event</string>

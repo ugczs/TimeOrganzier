@@ -10,22 +10,26 @@ import android.support.v7.widget.Toolbar
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
-import android.widget.ListView
+import android.widget.EditText
 import com.saradruid.yuguanzhao.timeorganzier.R
+import java.text.DateFormat
+import android.icu.util.ULocale.getCountry
 import java.util.*
 
 
+class MainActivity : AppCompatActivity(), OnDataPass  {
+    lateinit var mDrawerLayout: DrawerLayout
+    var timeList = TimeList()
 
-
-class MainActivity : AppCompatActivity() {
-
-    private lateinit var mDrawerLayout: DrawerLayout
-    private lateinit var countDownList: ListView
+    companion object {
+        var hour:Int = 11
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        setDefaultView()
 
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -34,67 +38,36 @@ class MainActivity : AppCompatActivity() {
             setDisplayHomeAsUpEnabled(true)
             setHomeAsUpIndicator(R.drawable.ic_menu)
         }
-            mDrawerLayout = findViewById(R.id.drawer_layout)
+        mDrawerLayout = findViewById(R.id.drawer_layout)
 
 
 
-            val navigationView: NavigationView = findViewById(R.id.nav_view)
-            navigationView.setNavigationItemSelectedListener { menuItem ->
+        val navigationView: NavigationView = findViewById(R.id.nav_view)
+        navigationView.setNavigationItemSelectedListener { menuItem ->
                 // set item as selected to persist highlight
-                menuItem.isChecked = false
+            menuItem.isChecked = false
                 // close drawer when item is tapped
-                mDrawerLayout.closeDrawers()
+            mDrawerLayout.closeDrawers()
 
-                // Add code here to update the UI based on the item selected
-                // For example, swap UI fragments here
 
+
+                // update  UI based on the item selected
                  when (menuItem.itemId) {
                     R.id.add -> {
                         Log.i("event menu add ","is clicked!")
-                        /*Log.i("event menu add ","is clicked!")
-                        intent = Intent(this, DatePicker::class.java)
-                        startActivity(intent)
-                        true*/
-
-                        val fragment = ListFragment() // this fragment contains the list with all the "test" items
-
-                        // Insert the fragment by replacing any existing fragment
-                        val fragmentManager = fragmentManager
-                        fragmentManager.beginTransaction()
-                                .replace(R.id.content_frame, fragment)
-                                .commit()
+                        TimeSettingView()
                     }
+                     R.id.unit-> {
+                         Log.i("event menu unit","is clicked!")
+                         openDateSelector()
+                     }
                      R.id.about -> {
                          Log.i("event menu about","is clicked!")
-                        /* Log.i("event menu about","is clicked!")
-                         intent = Intent(this, TimePicker::class.java)
-                         startActivity(intent)
-                         true*/
-                         val fragment = TimePicker() // this fragment contains the list with all the "test" items
-
-                         // Insert the fragment by replacing any existing fragment
-                         val fragmentManager = fragmentManager
-                         fragmentManager.beginTransaction()
-                                 .replace(R.id.content_frame, fragment)
-                                 .commit()
-                     }
-                     R.id.friends-> {
-                         Log.i("event menu unit","is clicked!")
-                         /* Log.i("event menu about","is clicked!")
-                          intent = Intent(this, TimePicker::class.java)
-                          startActivity(intent)
-                          true*/
-                         val fragment = DatePicker() // this fragment contains the list with all the "test" items
-
-                         // Insert the fragment by replacing any existing fragment
-                         val fragmentManager = fragmentManager
-                         fragmentManager.beginTransaction()
-                                 .replace(R.id.content_frame, fragment)
-                                 .commit()
+                         openCountDownList()
                      }
                 }
                 true
-            }
+        }
 
             mDrawerLayout.addDrawerListener(
                     object : DrawerLayout.DrawerListener {
@@ -130,15 +103,58 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun selectItem(position: Int) {
-        // Create a new fragment and specify the planet to show based on position
-        val fragment = ListFragment() // this fragment contains the list with all the "test" items
+    private fun openTimeSelector() {
+        val fragment = TimePicker()
+        val fragmentManager = fragmentManager
+        fragmentManager.beginTransaction()
+                .add(R.id.content_frame, fragment)
+                .commit()
+    }
 
-        // Insert the fragment by replacing any existing fragment
+    private fun openCountDownList() {
+        val fragment = ListFragment()
         val fragmentManager = fragmentManager
         fragmentManager.beginTransaction()
                 .replace(R.id.content_frame, fragment)
                 .commit()
+    }
 
+    private fun openDateSelector() {
+        val fragment = DatePicker()
+        val fragmentManager = fragmentManager
+        fragmentManager.beginTransaction()
+                .add(R.id.content_frame, fragment)
+                .commit()
+    }
+
+    private fun setDefaultView() {
+        val newFragment = ListFragment()
+        val ft = fragmentManager.beginTransaction()
+        ft.replace(R.id.content_frame, newFragment).commit()
+    }
+
+    private fun TimeSettingView() {
+        val newFragment = ScheduleFragment()
+        val ft = fragmentManager.beginTransaction()
+        ft.replace(R.id.content_frame, newFragment, "schedule").addToBackStack(null).commit()
+    }
+
+    override fun onDataPass(data: Any?) {
+        Log.i("onDataPass", "try to pass data")
+        if(data != null) {
+            val fragment = fragmentManager.findFragmentByTag("schedule") as ScheduleFragment
+            if( data is Time) {
+                fragment.upDateTime(data)
+            }
+            else if (data is Date) {
+                fragment.upDateDate(data)
+            }
+        }
+        else {
+            Log.i("onDataPass", "data is null")
+        }
+    }
+
+    private fun setUp() {
     }
 }

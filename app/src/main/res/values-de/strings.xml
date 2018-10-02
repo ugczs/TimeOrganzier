@@ -1,5 +1,9 @@
 <resources>
-    <string name="app_name">Zeit-Organisator</string>
+    <string name="set_time">Uhrzeit setzen</string>
+    <string name="set_date">Datum setzen</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="app_name">Zeit-Erinnerung</string>
     <string name="menu_option">Optionen</string>
     <string name="menu_about">Über</string>
     <string name="menu_addEvent">Ereignis hinzufügen</string>

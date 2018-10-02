@@ -9,7 +9,9 @@
         android:layout_height="29dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:text="TextView" />
+        android:textSize="20sp"
+        android:text="TextView"
+        />
 
     <TextView
         android:id="@+id/l_time"
@@ -17,7 +19,11 @@
         android:layout_height="41dp"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/l_description"
-        android:text="TextView" />
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:text="TextView"
+        />
+
 
     <TextView
         android:id="@+id/l_date"
@@ -25,5 +31,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/l_time"
-        android:text="TextView" />
+        android:textSize="12sp"
+        android:text="TextView"/>
 </RelativeLayout>
