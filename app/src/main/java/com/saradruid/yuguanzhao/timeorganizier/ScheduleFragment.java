@@ -9,19 +9,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.saradruid.yuguanzhao.timeorganzier.R;
 
-import java.text.DateFormat;
+import java.text.DateFormat;;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 public class ScheduleFragment extends Fragment implements View.OnClickListener {
 
     private EditText editTime;
     private EditText editDate;
+    private EditText editTitle;
     private Button btTime;
     private Button btDate;
+    private Button btOk;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -29,11 +34,17 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener {
 
         editTime = rootView.findViewById(R.id.editTime);
         editDate = rootView.findViewById(R.id.editDate);
+        editTitle = rootView.findViewById(R.id.editTitle);
 
         btTime = rootView.findViewById(R.id.buttonTime);
         btTime.setOnClickListener(this);
         btDate = rootView.findViewById(R.id.buttonDate);
         btDate.setOnClickListener(this);
+        btOk = rootView.findViewById(R.id.buttonOk);
+        btOk.setOnClickListener(this);
+
+        setCurrentDate();
+        setCurrentTime();
 
         return rootView;
     }
@@ -46,6 +57,9 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.buttonDate:
                 openDateSelector();
+                break;
+            case R.id.buttonOk:
+                setListItem();
                 break;
             default:
                 break;
@@ -81,17 +95,7 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener {
     }
 
     public void upDateTime(Time time) {
-        String hour = time.getHour();
-        String minute = time.getMinute();
-        int h = Integer.parseInt(hour);
-        int m = Integer.parseInt(minute);
-        if(h < 10) {
-            hour = String.format("%02d", h);
-        }
-        if(m < 10) {
-            minute = String.format("%02d", m);
-        }
-        editTime.setText(hour + ":" + minute);
+        editTime.setText(time.toString());
     }
 
     public void upDateDate(Date date) {
@@ -99,5 +103,68 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener {
         DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT, current);
         String d = df.format(date);
         editDate.setText(d);
+    }
+
+    public void setCurrentDate() {
+        Date currentDate = Calendar.getInstance().getTime();
+        upDateDate(currentDate);
+    }
+
+    public void setCurrentTime() {
+        Calendar c = Calendar.getInstance();
+        int hour = c.get(Calendar.HOUR_OF_DAY);
+        int min = c.get(Calendar.MINUTE);
+        Time currentTime = new Time(hour, min);
+        upDateTime(currentTime);
+    }
+
+    public void setListItem() {
+        try {
+            String setTime = editTime.getText().toString();
+            String setDate = editDate.getText().toString();
+            Date currentTime = Calendar.getInstance().getTime();
+
+            Locale current = getResources().getConfiguration().locale;
+            DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT, current);
+            Date date = (Date)df.parse(setDate);
+
+            Time time =  parseStringTime(setTime);
+
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(date);
+            cal.add(Calendar.HOUR_OF_DAY, Integer.parseInt(time.getHour()));
+            cal.add(Calendar.MINUTE, Integer.parseInt(time.getMinute()));
+
+            Date userSetTime = cal.getTime();
+
+            long l = calculateDateDiff(currentTime, userSetTime);
+
+            editTitle.setText(Long.toString(l));
+
+        }
+        catch(Exception e) {
+            Log.e("ScheduleFragment", e.getMessage());
+        }
+    }
+
+    public Time parseStringTime(String time) {
+        int setHour;
+        int setMinute;
+        setHour = Integer.parseInt(time.substring(0, 2));
+        setMinute = Integer.parseInt(time.substring(3));
+        Time t = new Time(setHour, setMinute);
+        return t;
+    }
+
+    public long calculateDateDiff(Date begin, Date end) {
+        if(end.after(begin)) {
+            long diffInMillies = Math.abs(end.getTime() - begin.getTime());
+            long diff = TimeUnit.SECONDS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+            return diff;
+        }
+        else {
+            Toast.makeText(getActivity(), getResources().getString(R.string.set_time_err),Toast.LENGTH_LONG).show();
+            return 0;
+        }
     }
 }

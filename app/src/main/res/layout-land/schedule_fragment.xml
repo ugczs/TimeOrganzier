@@ -58,7 +58,8 @@
         android:layout_centerVertical="true"
         android:ems="10"
         android:inputType="time"
-        android:text="00:00" />
+        android:focusable="false"
+        />
 
     <EditText
         android:id="@+id/editDate"
@@ -69,5 +70,6 @@
         android:layout_marginStart="86dp"
         android:ems="10"
         android:inputType="date"
-        android:text="01.01.18" />
+        android:focusable="false"
+        />
 </RelativeLayout>
