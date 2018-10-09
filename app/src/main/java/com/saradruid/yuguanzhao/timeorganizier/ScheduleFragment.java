@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import com.saradruid.yuguanzhao.timeorganzier.R;
 
-import java.text.DateFormat;;
+import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -126,7 +126,7 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener {
 
             Locale current = getResources().getConfiguration().locale;
             DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT, current);
-            Date date = (Date)df.parse(setDate);
+            Date date = df.parse(setDate);
 
             Time time =  parseStringTime(setTime);
 
@@ -139,7 +139,9 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener {
 
             long l = calculateDateDiff(currentTime, userSetTime);
 
-            editTitle.setText(Long.toString(l));
+            String timeLeft = calcLeftTime(l);
+
+            editTitle.setText(timeLeft);
 
         }
         catch(Exception e) {
@@ -157,14 +159,24 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener {
     }
 
     public long calculateDateDiff(Date begin, Date end) {
+        long diff = 0;
         if(end.after(begin)) {
             long diffInMillies = Math.abs(end.getTime() - begin.getTime());
-            long diff = TimeUnit.SECONDS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+            diff = TimeUnit.MILLISECONDS.convert(diffInMillies, TimeUnit.MILLISECONDS);
             return diff;
         }
         else {
             Toast.makeText(getActivity(), getResources().getString(R.string.set_time_err),Toast.LENGTH_LONG).show();
-            return 0;
+            return diff;
         }
+    }
+
+    public String calcLeftTime(long timeInMilliSeconds) {
+        long seconds = timeInMilliSeconds / 1000;
+        long minutes = seconds / 60;
+        long hours = minutes / 60;
+        long days = hours / 24;
+        String time = days + ":" + hours % 24 + ":" + minutes % 60 + ":" + seconds % 60;
+        return time;
     }
 }
