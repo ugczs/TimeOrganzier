@@ -49,7 +49,7 @@ public class TimePicker extends Fragment {
             }
         }, currentHour, currentMinute, true);
 
-        d.setTitle("Select Time");
+        d.setTitle(R.string.set_time);
         d.setCancelable(false);
         d.show();
         return rootView;

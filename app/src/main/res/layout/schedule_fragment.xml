@@ -38,7 +38,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="108dp"
-        android:text="OK" />
+        android:text= "OK" />
 
     <EditText
         android:id="@+id/editTitle"
@@ -67,13 +67,13 @@
 
     <EditText
         android:id="@+id/editDate"
-        android:layout_width="167dp"
+        android:layout_width="163dp"
         android:layout_height="wrap_content"
         android:layout_alignEnd="@+id/textViewTitle"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="204dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="195dp"
         android:ems="10"
-        android:inputType="date"
         android:focusable="false"
-        />
+        android:inputType="date" />
 </RelativeLayout>

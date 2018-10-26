@@ -3,6 +3,7 @@ package com.saradruid.yuguanzhao.timeorganizier;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -139,9 +140,17 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener {
 
             long l = calculateDateDiff(currentTime, userSetTime);
 
-            String timeLeft = calcLeftTime(l);
+            //countdown timer
+            new CountDownTimer(l, 1000) {
 
-            editTitle.setText(timeLeft);
+                public void onTick(long millisUntilFinished) {
+                    String timeLeft = calcLeftTime(millisUntilFinished);
+                    editTitle.setText(timeLeft);
+                }
+                public void onFinish() {
+                    editTitle.setText(R.string.time_up);
+                }
+            }.start();
 
         }
         catch(Exception e) {

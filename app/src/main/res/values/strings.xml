@@ -1,4 +1,5 @@
 <resources>
+    <string name="time_up">Time\'s Up</string>
     <string name="set_time_err">The set time is in the past.</string>
     <string name="set_time">set time</string>
     <string name="set_date">set date</string>
