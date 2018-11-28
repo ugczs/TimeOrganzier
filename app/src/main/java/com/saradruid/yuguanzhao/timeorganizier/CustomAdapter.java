@@ -16,6 +16,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 public class CustomAdapter extends ArrayAdapter<ListItem> {
 
@@ -35,7 +36,8 @@ public class CustomAdapter extends ArrayAdapter<ListItem> {
         TextView time = customView.findViewById(R.id.l_time);
         TextView date = customView.findViewById(R.id.l_date);
 
-        DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+        Locale current = Locale.getDefault();
+        DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT, current);
         Date listDate = singleListItem.getDate();
         String reportDate = df.format(listDate);
 
@@ -46,4 +48,7 @@ public class CustomAdapter extends ArrayAdapter<ListItem> {
 
         return customView;
     }
+
+    Locale current = Locale.getDefault();
+    DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT, current);
 }

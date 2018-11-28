@@ -6,20 +6,20 @@
     <TextView
         android:id="@+id/l_description"
         android:layout_width="match_parent"
-        android:layout_height="29dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:textSize="20sp"
+        android:textSize="30sp"
         android:text="TextView"
         />
 
     <TextView
         android:id="@+id/l_time"
         android:layout_width="match_parent"
-        android:layout_height="41dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/l_description"
-        android:textSize="30sp"
+        android:textSize="40sp"
         android:textStyle="bold"
         android:text="TextView"
         />
@@ -31,6 +31,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/l_time"
-        android:textSize="12sp"
+        android:textSize="20sp"
         android:text="TextView"/>
 </RelativeLayout>

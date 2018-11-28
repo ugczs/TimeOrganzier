@@ -38,7 +38,7 @@ public class DatePicker extends Fragment implements DatePickerDialog.OnDateSetLi
                 calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
                 calendar.get(Calendar.DAY_OF_MONTH));
 
-        dialog.setCancelable(false);
+        dialog.setCancelable(true);
         dialog.show();
         return rootView;
     }

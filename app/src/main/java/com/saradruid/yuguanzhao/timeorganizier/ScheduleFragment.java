@@ -2,8 +2,11 @@ package com.saradruid.yuguanzhao.timeorganizier;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,13 +15,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.saradruid.yuguanzhao.timeorganzier.R;
 
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Map;
+import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class ScheduleFragment extends Fragment implements View.OnClickListener {
 
@@ -28,6 +36,7 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener {
     private Button btTime;
     private Button btDate;
     private Button btOk;
+    private CountDownTimer cTimer;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -138,10 +147,20 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener {
 
             Date userSetTime = cal.getTime();
 
-            long l = calculateDateDiff(currentTime, userSetTime);
+            Date userSetTimeInGMT = dateToGMT(userSetTime);
+
+
+
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+            String dateTimeKey = Long.toString(userSetTimeInGMT.getTime());
+            prefs.edit().putLong(dateTimeKey, userSetTimeInGMT.getTime()).apply();
+
+
+
+            long l = calculateDateDiff(dateToGMT(currentTime), userSetTimeInGMT);
 
             //countdown timer
-            new CountDownTimer(l, 1000) {
+            cTimer = new CountDownTimer(l, 1000) {
 
                 public void onTick(long millisUntilFinished) {
                     String timeLeft = calcLeftTime(millisUntilFinished);
@@ -150,12 +169,66 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener {
                 public void onFinish() {
                     editTitle.setText(R.string.time_up);
                 }
-            }.start();
+            };
+
+            cTimer.start();
 
         }
         catch(Exception e) {
             Log.e("ScheduleFragment", e.getMessage());
         }
+    }
+
+    public void listAllSavedTimes(SharedPreferences prefs) {
+        Map<String,?> keys = prefs.getAll();
+        for(Map.Entry<String,?> entry : keys.entrySet()){
+            Log.i("map values",entry.getKey() + ": " +
+                    entry.getValue().toString());
+        }
+    }
+
+    public  Date localToGMT(){
+        Date currentDate = Calendar.getInstance().getTime();
+        TimeZone tz = TimeZone.getDefault();
+        Date ret = new Date(currentDate.getTime() - tz.getRawOffset() );
+
+        // if we are now in DST, back off by the delta.  Note that we are checking the GMT date, this is the KEY.
+        if ( tz.inDaylightTime( ret )){
+            Date dstDate = new Date( ret.getTime() - tz.getDSTSavings() );
+
+            // check to make sure we have not crossed back into standard time
+            // this happens when we are on the cusp of DST (7pm the day before the change for PDT)
+            if ( tz.inDaylightTime( dstDate )){
+                ret = dstDate;
+            }
+        }
+        Log.i("localToGMT", ret.toString());
+        return ret;
+    }
+
+    public Date dateToGMT(Date date) {
+        TimeZone tz = TimeZone.getDefault();
+        Date ret = new Date(date.getTime() - tz.getRawOffset() );
+
+        // if we are now in DST, back off by the delta.  Note that we are checking the GMT date, this is the KEY.
+        if ( tz.inDaylightTime( ret )){
+            Date dstDate = new Date( ret.getTime() - tz.getDSTSavings() );
+
+            // check to make sure we have not crossed back into standard time
+            // this happens when we are on the cusp of DST (7pm the day before the change for PDT)
+            if ( tz.inDaylightTime( dstDate )){
+                ret = dstDate;
+            }
+        }
+        Log.i("dateToGMT", ret.toString());
+        return ret;
+    }
+
+    public Date gmtToLocalDate(Date date) {
+        String timeZone = Calendar.getInstance().getTimeZone().getID();
+        Date local = new Date(date.getTime() + TimeZone.getTimeZone(timeZone).getOffset(date.getTime()));
+        Log.i("LocalDate is", local.toString());
+        return local;
     }
 
     public Time parseStringTime(String time) {
@@ -188,4 +261,16 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener {
         String time = days + ":" + hours % 24 + ":" + minutes % 60 + ":" + seconds % 60;
         return time;
     }
+
+    /*@Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        cancelTimer();
+        Log.d("Destroy", "FragmentA.onDestroyView() has been called.");
+    }
+
+    private void cancelTimer() {
+        if(cTimer!=null)
+            cTimer.cancel();
+    }*/
 }
