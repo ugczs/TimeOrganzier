@@ -15,7 +15,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
 import com.saradruid.yuguanzhao.timeorganzier.R;
 
 import java.text.DateFormat;
@@ -23,10 +22,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
-import java.util.TimeZone;
-import java.util.concurrent.TimeUnit;
 
-import static android.content.Context.MODE_PRIVATE;
 
 public class ScheduleFragment extends Fragment implements View.OnClickListener {
 
@@ -37,6 +33,7 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener {
     private Button btDate;
     private Button btOk;
     private CountDownTimer cTimer;
+    private Calculator calculator = new Calculator();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -138,7 +135,7 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener {
             DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT, current);
             Date date = df.parse(setDate);
 
-            Time time =  parseStringTime(setTime);
+            Time time =  calculator.parseStringTime(setTime);
 
             Calendar cal = Calendar.getInstance();
             cal.setTime(date);
@@ -147,24 +144,36 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener {
 
             Date userSetTime = cal.getTime();
 
-            Date userSetTimeInGMT = dateToGMT(userSetTime);
+            Date userSetTimeInGMT = calculator.dateToGMT(userSetTime);
 
 
 
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
             String dateTimeKey = Long.toString(userSetTimeInGMT.getTime());
-            prefs.edit().putLong(dateTimeKey, userSetTimeInGMT.getTime()).apply();
+            /*prefs.edit().putLong(dateTimeKey, userSetTimeInGMT.getTime()).apply();*/
+
+
+            String item = "";
+            if(editTitle.getText() == null) {
+                Toast.makeText(getActivity(),R.string.setTitle, Toast.LENGTH_SHORT).show();
+            }
+            else {
+                String title = editTitle.getText().toString();
+                item = title + "#" + dateTimeKey;
+            }
+
+            prefs.edit().putString(dateTimeKey, item).apply();
 
 
 
-            long l = calculateDateDiff(dateToGMT(currentTime), userSetTimeInGMT);
+            long l = calculator.calculateDateDiff(calculator.dateToGMT(currentTime), userSetTimeInGMT);
 
             //countdown timer
             cTimer = new CountDownTimer(l, 1000) {
 
                 public void onTick(long millisUntilFinished) {
-                    String timeLeft = calcLeftTime(millisUntilFinished);
-                    editTitle.setText(timeLeft);
+                    String timeLeft = calculator.calcLeftTime(millisUntilFinished);
+                    /*editTitle.setText(timeLeft);*/
                 }
                 public void onFinish() {
                     editTitle.setText(R.string.time_up);
@@ -186,91 +195,4 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener {
                     entry.getValue().toString());
         }
     }
-
-    public  Date localToGMT(){
-        Date currentDate = Calendar.getInstance().getTime();
-        TimeZone tz = TimeZone.getDefault();
-        Date ret = new Date(currentDate.getTime() - tz.getRawOffset() );
-
-        // if we are now in DST, back off by the delta.  Note that we are checking the GMT date, this is the KEY.
-        if ( tz.inDaylightTime( ret )){
-            Date dstDate = new Date( ret.getTime() - tz.getDSTSavings() );
-
-            // check to make sure we have not crossed back into standard time
-            // this happens when we are on the cusp of DST (7pm the day before the change for PDT)
-            if ( tz.inDaylightTime( dstDate )){
-                ret = dstDate;
-            }
-        }
-        Log.i("localToGMT", ret.toString());
-        return ret;
-    }
-
-    public Date dateToGMT(Date date) {
-        TimeZone tz = TimeZone.getDefault();
-        Date ret = new Date(date.getTime() - tz.getRawOffset() );
-
-        // if we are now in DST, back off by the delta.  Note that we are checking the GMT date, this is the KEY.
-        if ( tz.inDaylightTime( ret )){
-            Date dstDate = new Date( ret.getTime() - tz.getDSTSavings() );
-
-            // check to make sure we have not crossed back into standard time
-            // this happens when we are on the cusp of DST (7pm the day before the change for PDT)
-            if ( tz.inDaylightTime( dstDate )){
-                ret = dstDate;
-            }
-        }
-        Log.i("dateToGMT", ret.toString());
-        return ret;
-    }
-
-    public Date gmtToLocalDate(Date date) {
-        String timeZone = Calendar.getInstance().getTimeZone().getID();
-        Date local = new Date(date.getTime() + TimeZone.getTimeZone(timeZone).getOffset(date.getTime()));
-        Log.i("LocalDate is", local.toString());
-        return local;
-    }
-
-    public Time parseStringTime(String time) {
-        int setHour;
-        int setMinute;
-        setHour = Integer.parseInt(time.substring(0, 2));
-        setMinute = Integer.parseInt(time.substring(3));
-        Time t = new Time(setHour, setMinute);
-        return t;
-    }
-
-    public long calculateDateDiff(Date begin, Date end) {
-        long diff = 0;
-        if(end.after(begin)) {
-            long diffInMillies = Math.abs(end.getTime() - begin.getTime());
-            diff = TimeUnit.MILLISECONDS.convert(diffInMillies, TimeUnit.MILLISECONDS);
-            return diff;
-        }
-        else {
-            Toast.makeText(getActivity(), getResources().getString(R.string.set_time_err),Toast.LENGTH_LONG).show();
-            return diff;
-        }
-    }
-
-    public String calcLeftTime(long timeInMilliSeconds) {
-        long seconds = timeInMilliSeconds / 1000;
-        long minutes = seconds / 60;
-        long hours = minutes / 60;
-        long days = hours / 24;
-        String time = days + ":" + hours % 24 + ":" + minutes % 60 + ":" + seconds % 60;
-        return time;
-    }
-
-    /*@Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        cancelTimer();
-        Log.d("Destroy", "FragmentA.onDestroyView() has been called.");
-    }
-
-    private void cancelTimer() {
-        if(cTimer!=null)
-            cTimer.cancel();
-    }*/
 }

@@ -1,4 +1,5 @@
 <resources>
+    <string name="setTitle">Bitte einen Titel hinzufügen</string>
     <string name="time_up">Abgelaufen</string>
     <string name="set_time_err">Die eingestellte Zeit liegt in der Vergangenheit.</string>
     <string name="set_time">Uhrzeit setzen</string>
