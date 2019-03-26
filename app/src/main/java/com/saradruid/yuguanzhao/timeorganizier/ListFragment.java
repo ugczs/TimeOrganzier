@@ -4,6 +4,8 @@ import android.app.Fragment;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,8 +28,9 @@ public class ListFragment extends Fragment {
         ArrayList<ListItem> listItems = getListItems();
         View rootView = inflater.inflate(R.layout.list_fragment, container, false);
 
-        ListView lv = rootView.findViewById(R.id.countDownList);
-        lv.setAdapter(new CustomAdapter(getActivity(), listItems));
+        RecyclerView rv = rootView.findViewById(R.id.countDownList);
+        rv.setAdapter(new CustomAdapter(getActivity(), listItems));
+        rv.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         return rootView;
     }

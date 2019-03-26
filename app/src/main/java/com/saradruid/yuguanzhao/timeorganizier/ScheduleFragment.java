@@ -2,7 +2,6 @@ package com.saradruid.yuguanzhao.timeorganizier;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;

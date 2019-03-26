@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity(), OnDataPass  {
                      }
                      R.id.about -> {
                          Log.i("event menu about","is clicked!")
-                         openCountDownList()
+                         setDefaultView()
                      }
                 }
                 true

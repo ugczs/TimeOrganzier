@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,23 +21,33 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
-public class CustomAdapter extends ArrayAdapter<ListItem> {
-    private CountDownTimer cTimer;
-    private TextView description;
-    private TextView time;
-    private TextView date;
-    private Calculator calculator = new Calculator();
+public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder> {
+    /*private CountDownTimer cTimer;
+    private Calculator calculator = new Calculator();*/
+    private Context context;
+    private List<ListItem> list;
 
-    public CustomAdapter(@NonNull Context context, ArrayList<ListItem> resource) {
-        super(context, R.layout.eachlistitem, resource);
+    public CustomAdapter(@NonNull Context context, ArrayList<ListItem> list) {
+        this.context = context;
+        this.list = list;
+    }
+
+    @Override
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new ViewHolder(
+                LayoutInflater
+                        .from(context)
+                        .inflate(R.layout.eachlistitem, parent, false)
+        );
     }
 
     @NonNull
-    @Override
+   /* @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View customView = inflater.inflate(R.layout.eachlistitem, parent, false);
@@ -75,5 +86,37 @@ public class CustomAdapter extends ArrayAdapter<ListItem> {
         };
         cTimer.start();
         return customView;
+    }*/
+
+    @Override
+    public int getItemCount() {
+        return this.list.size();
+    }
+
+
+
+    @Override
+    public void onBindViewHolder(@NonNull CustomAdapter.ViewHolder holder, int position) {
+        ListItem list = this.list.get(position);
+
+        holder.description.setText(list.getDescription());
+        holder.time.setText(list.getTime());
+        holder.date.setText(list.getDate().toString());
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        private TextView description;
+        private TextView time;
+        private TextView date;
+
+        public ViewHolder(@NonNull View view) {
+            super(view);
+            this.description = view
+                    .findViewById(R.id.l_description);
+            this.time = view
+                    .findViewById(R.id.l_time);
+            this.date = view
+                    .findViewById(R.id.l_date);
+        }
     }
 }

@@ -2,24 +2,8 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:paddingTop="40dp">
+    android:paddingTop="30dip">
 
-    <Button
-        android:id="@+id/buttonTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        android:layout_marginEnd="136dp"
-        android:text="@string/set_time" />
-
-    <Button
-        android:id="@+id/buttonDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/buttonOk"
-        android:layout_alignStart="@+id/buttonTime"
-        android:text="@string/set_date" />
 
     <TextView
         android:id="@+id/textViewTitle"
@@ -27,49 +11,75 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:text="Activity" />
-
-    <Button
-        android:id="@+id/buttonOk"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="41dp"
-        android:text="OK" />
+        android:text="Activity"
+        />
 
     <EditText
         android:id="@+id/editTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="61dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Title" />
+        android:hint="Enter your title"
+        android:gravity="center_horizontal"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/textViewTitle"
+        android:layout_marginTop="30dip"/>
 
     <EditText
         android:id="@+id/editTime"
-        android:layout_width="163dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/editDate"
-        android:layout_centerVertical="true"
-        android:ems="10"
+        android:ems="5"
         android:inputType="time"
         android:focusable="false"
+        android:layout_below="@+id/editTitle"
+        android:layout_centerHorizontal="true"
+        android:layout_alignLeft = "@+id/editTitle"
+        android:layout_marginTop="30dip"
+        />
+
+    <Button
+        android:id="@+id/buttonTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/editTime"
+        android:layout_below="@+id/editTitle"
+        android:text="@string/set_time"
+        android:layout_alignRight = "@+id/editTitle"
+        android:layout_marginLeft="10dip"
+        android:layout_marginTop="30dip"
         />
 
     <EditText
         android:id="@+id/editDate"
-        android:layout_width="167dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignTop="@+id/buttonDate"
-        android:layout_marginStart="86dp"
-        android:ems="10"
-        android:inputType="date"
+        android:ems="5"
         android:focusable="false"
-        />
+        android:inputType="date"
+        android:layout_below="@+id/editTime"
+        android:layout_centerHorizontal="true"
+        android:layout_alignLeft = "@+id/editTime"
+        android:layout_marginTop="30dip"/>
+
+    <Button
+        android:id="@+id/buttonDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/buttonTime"
+        android:layout_toRightOf="@+id/editDate"
+        android:text="@string/set_date"
+        android:layout_alignRight = "@+id/buttonTime"
+        android:layout_marginLeft="10dip"
+        android:layout_marginTop="30dip"/>
+
+    <Button
+        android:id="@+id/buttonOk"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/buttonDate"
+        android:text= "OK"
+        android:layout_marginTop="30dip"/>
 </RelativeLayout>
