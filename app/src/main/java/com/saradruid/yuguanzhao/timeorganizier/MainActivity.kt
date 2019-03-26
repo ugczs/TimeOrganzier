@@ -123,7 +123,7 @@ class MainActivity : AppCompatActivity(), OnDataPass  {
     private fun TimeSettingView() {
         val newFragment = ScheduleFragment()
         val ft = fragmentManager.beginTransaction()
-        ft.replace(R.id.content_frame, newFragment, "schedule").addToBackStack(null).commit()
+        ft.replace(R.id.content_frame, newFragment, "schedule").addToBackStack("startScreen").commit()
     }
 
     override fun onDataPass(data: Any?) {

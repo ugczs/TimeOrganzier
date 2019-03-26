@@ -70,6 +70,11 @@ public class TimePicker extends Fragment {
     }
 
     public void passData(Time data) {
-        dataPasser.onDataPass(data);
+        try{
+            dataPasser.onDataPass(data);
+        }
+        catch (Exception e) {
+            Log.e("passData:",e.getMessage());
+        }
     }
 }

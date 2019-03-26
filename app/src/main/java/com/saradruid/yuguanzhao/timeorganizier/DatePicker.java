@@ -83,6 +83,12 @@ public class DatePicker extends Fragment implements DatePickerDialog.OnDateSetLi
     }
 
     public void passData(Object data) {
-        dataPasser.onDataPass(data);
+        try{
+            dataPasser.onDataPass(data);
+        }
+        catch (Exception e)
+        {
+            Log.e("passData:",e.getMessage());
+        }
     }
 }
