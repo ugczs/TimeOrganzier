@@ -50,11 +50,11 @@ public class ListFragment extends Fragment {
             String time = parts[1];
             long l =   Long.parseLong(time);
 
-            DateTime dateTimeLocal = new DateTime( l ).withZone(DateTimeZone.getDefault());
+            DateTime setTime = new DateTime( l ).withZone(DateTimeZone.getDefault());
 
-            Log.i("local time is: ", dateTimeLocal.toString());
+            Log.i("set time is: ", setTime.toString());
 
-            ListItem i = new ListItem(name, "b1", dateTimeLocal.toDate());
+            ListItem i = new ListItem(name, "b1", setTime.toDate());
             list.add(i);
         }
         return list;
