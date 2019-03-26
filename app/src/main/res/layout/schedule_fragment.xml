@@ -30,11 +30,12 @@
         android:id="@+id/editTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
+        android:ems="5"
         android:inputType="time"
         android:focusable="false"
         android:layout_below="@+id/editTitle"
         android:layout_centerHorizontal="true"
+        android:layout_alignLeft = "@+id/editTitle"
         android:layout_marginTop="30dip"
         />
 
@@ -45,6 +46,8 @@
         android:layout_toRightOf="@+id/editTime"
         android:layout_below="@+id/editTitle"
         android:text="@string/set_time"
+        android:layout_alignRight = "@+id/editTitle"
+        android:layout_marginLeft="10dip"
         android:layout_marginTop="30dip"
         />
 
@@ -52,11 +55,12 @@
         android:id="@+id/editDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
+        android:ems="5"
         android:focusable="false"
         android:inputType="date"
         android:layout_below="@+id/editTime"
         android:layout_centerHorizontal="true"
+        android:layout_alignLeft = "@+id/editTime"
         android:layout_marginTop="30dip"/>
 
     <Button
@@ -66,6 +70,8 @@
         android:layout_below="@+id/buttonTime"
         android:layout_toRightOf="@+id/editDate"
         android:text="@string/set_date"
+        android:layout_alignRight = "@+id/buttonTime"
+        android:layout_marginLeft="10dip"
         android:layout_marginTop="30dip"/>
 
     <Button
