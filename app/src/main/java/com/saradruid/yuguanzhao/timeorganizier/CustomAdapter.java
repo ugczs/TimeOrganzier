@@ -27,8 +27,7 @@ import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder> {
-    /*private CountDownTimer cTimer;
-    private Calculator calculator = new Calculator();*/
+    private Calculator calculator = new Calculator();
     private Context context;
     private List<ListItem> list;
 
@@ -96,18 +95,39 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
 
 
     @Override
-    public void onBindViewHolder(@NonNull CustomAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final CustomAdapter.ViewHolder holder, int position) {
         ListItem list = this.list.get(position);
 
+        if (holder.timer != null) {
+            holder.timer.cancel();
+        }
+
+        Date listDate = list.getDate();
+        Date currentTime = calculator.dateToGMT(Calendar.getInstance().getTime());
+        Date userSetTimeInGMT = calculator.dateToGMT(listDate);
+        Log.i("cuTime", "current time:" + currentTime.toString() + "user set time" + userSetTimeInGMT.toString());
+        long l = calculator.calculateDateDiff(calculator.dateToGMT(currentTime), userSetTimeInGMT);
+
+        holder.timer = new CountDownTimer(l, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+                String timeLeft = calculator.calcLeftTime(millisUntilFinished);
+                holder.time.setText(timeLeft);
+            }
+            public void onFinish() {
+                holder.time.setText(R.string.time_up);
+            }
+        }.start();
+
         holder.description.setText(list.getDescription());
-        holder.time.setText(list.getTime());
         holder.date.setText(list.getDate().toString());
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         private TextView description;
         private TextView time;
         private TextView date;
+        private CountDownTimer timer;
 
         public ViewHolder(@NonNull View view) {
             super(view);

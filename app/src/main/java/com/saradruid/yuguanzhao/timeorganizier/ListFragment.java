@@ -40,7 +40,7 @@ public class ListFragment extends Fragment {
 
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-       /* cleanSharedPreferences(prefs);*/
+        /*cleanSharedPreferences(prefs);*/
         //get all items from sharedPref
         Map<String,?> keys = prefs.getAll();
         //sort items in list

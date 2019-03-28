@@ -1,9 +1,6 @@
 package com.saradruid.yuguanzhao.timeorganizier;
 
 import android.util.Log;
-import android.widget.Toast;
-
-import com.saradruid.yuguanzhao.timeorganzier.R;
 
 import java.util.Calendar;
 import java.util.Date;
