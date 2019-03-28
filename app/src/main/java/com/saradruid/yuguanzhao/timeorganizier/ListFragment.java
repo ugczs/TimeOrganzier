@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 
 import com.saradruid.yuguanzhao.timeorganzier.R;
 
@@ -65,5 +64,15 @@ public class ListFragment extends Fragment {
 
     public void cleanSharedPreferences(SharedPreferences prefs) {
         prefs.edit().clear().commit();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 }
