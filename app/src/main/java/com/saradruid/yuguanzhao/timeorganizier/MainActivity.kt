@@ -9,15 +9,18 @@ import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBar
 import android.support.v7.widget.Toolbar
 import android.util.Log
+import android.view.KeyEvent
 import android.view.MenuItem
 import android.view.View
 import com.saradruid.yuguanzhao.timeorganzier.R
 import java.util.*
+import android.view.KeyEvent.KEYCODE_BACK
+
+
 
 
 class MainActivity : AppCompatActivity(), OnDataPass  {
     lateinit var mDrawerLayout: DrawerLayout
-    var timeList = TimeList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,7 +51,6 @@ class MainActivity : AppCompatActivity(), OnDataPass  {
                     }
                      R.id.unit-> {
                          Log.i("event menu unit","is clicked!")
-                         openDateSelector()
                      }
                      R.id.about -> {
                          Log.i("event menu about","is clicked!")
@@ -91,7 +93,7 @@ class MainActivity : AppCompatActivity(), OnDataPass  {
         }
     }
 
-    private fun openTimeSelector() {
+    /*private fun openTimeSelector() {
         val fragment = TimePicker()
         val fragmentManager = fragmentManager
         fragmentManager.beginTransaction()
@@ -106,14 +108,14 @@ class MainActivity : AppCompatActivity(), OnDataPass  {
                 .replace(R.id.content_frame, fragment)
                 .commit()
     }
-
-    private fun openDateSelector() {
+*/
+    /*private fun openDateSelector() {
         val fragment = DatePicker()
         val fragmentManager = fragmentManager
         fragmentManager.beginTransaction()
                 .add(R.id.content_frame, fragment)
                 .commit()
-    }
+    }*/
 
     private fun setDefaultView() {
         val newFragment = ListFragment()
@@ -128,8 +130,16 @@ class MainActivity : AppCompatActivity(), OnDataPass  {
 
     private fun TimeSettingView() {
         val newFragment = ScheduleFragment()
-        val ft = fragmentManager.beginTransaction()
-        ft.replace(R.id.content_frame, newFragment, "schedule").addToBackStack("startScreen").commit()
+
+        val schedule = fragmentManager.findFragmentByTag("schedule")
+        if (schedule == null) {
+            val ft = fragmentManager.beginTransaction()
+            ft.replace(R.id.content_frame, newFragment, "schedule").addToBackStack("startScreen").commit()
+        }
+        else {
+            Log.i("schedule", "can not be duplicated!")
+        }
+
     }
 
     override fun onDataPass(data: Any?) {
@@ -160,4 +170,12 @@ class MainActivity : AppCompatActivity(), OnDataPass  {
         Log.e("paused", "OnPause of  main activity")
         super.onPause()
     }
+
+    /*override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            return false
+        }
+        return super.onKeyDown(keyCode, event)
+    }*/
+
 }

@@ -89,12 +89,28 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onResume() {
         Log.e("resumed", "onResume of schedule fragment");
+        Fragment timePicker = getFragmentManager().findFragmentByTag("timePicker");
+        Fragment datePicker = getFragmentManager().findFragmentByTag("datePicker");
+        if(timePicker != null) {
+            getFragmentManager().beginTransaction().remove(timePicker).commit();
+        }
+        if(datePicker != null) {
+            getFragmentManager().beginTransaction().remove(datePicker).commit();
+        }
         super.onResume();
     }
 
     @Override
     public void onPause() {
         Log.e("paused", "OnPause of schedule fragment");
+        Fragment timePicker = getFragmentManager().findFragmentByTag("timePicker");
+        Fragment datePicker = getFragmentManager().findFragmentByTag("datePicker");
+        if(timePicker != null) {
+            getFragmentManager().beginTransaction().remove(timePicker).commit();
+        }
+        if(datePicker != null) {
+            getFragmentManager().beginTransaction().remove(datePicker).commit();
+        }
         super.onPause();
     }
 
@@ -172,4 +188,5 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener {
                     entry.getValue().toString());
         }
     }
+
 }

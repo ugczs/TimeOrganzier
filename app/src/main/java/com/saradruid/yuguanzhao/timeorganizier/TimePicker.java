@@ -1,18 +1,15 @@
 package com.saradruid.yuguanzhao.timeorganizier;
 
-import android.app.Activity;
+
 import android.app.Fragment;
 import android.app.TimePickerDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.saradruid.yuguanzhao.timeorganzier.R;
 
@@ -76,5 +73,21 @@ public class TimePicker extends Fragment {
         catch (Exception e) {
             Log.e("passData:",e.getMessage());
         }
+    }
+
+    @Override
+    public void onResume() {
+        Log.e("resumed", "onResume of TimePicker");
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        Log.e("paused", "OnPause of TimePicker");
+        super.onPause();
+    }
+
+    public void callParentMethod(int keyCode, KeyEvent event){
+        getActivity().onKeyDown(keyCode, event);
     }
 }

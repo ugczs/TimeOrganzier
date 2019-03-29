@@ -3,9 +3,7 @@ package com.saradruid.yuguanzhao.timeorganizier;
 
 import android.app.DatePickerDialog;
 import android.app.Fragment;
-import android.app.TimePickerDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,7 +14,6 @@ import com.saradruid.yuguanzhao.timeorganzier.R;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
 public class DatePicker extends Fragment implements DatePickerDialog.OnDateSetListener {
@@ -40,6 +37,7 @@ public class DatePicker extends Fragment implements DatePickerDialog.OnDateSetLi
 
         dialog.setCancelable(true);
         dialog.show();
+
         return rootView;
     }
 
@@ -90,5 +88,17 @@ public class DatePicker extends Fragment implements DatePickerDialog.OnDateSetLi
         {
             Log.e("passData:",e.getMessage());
         }
+    }
+
+    @Override
+    public void onResume() {
+        Log.e("resumed", "onResume of DatePicker");
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        Log.e("paused", "OnPause of DatePicker");
+        super.onPause();
     }
 }
