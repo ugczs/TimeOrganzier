@@ -4,7 +4,6 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -31,7 +30,6 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener {
     private Button btTime;
     private Button btDate;
     private Button btOk;
-    private CountDownTimer cTimer;
     private Calculator calculator = new Calculator();
 
     @Override
@@ -128,7 +126,7 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener {
         try {
             String setTime = editTime.getText().toString();
             String setDate = editDate.getText().toString();
-            Date currentTime = Calendar.getInstance().getTime();
+
 
             Locale current = getResources().getConfiguration().locale;
             DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT, current);
@@ -143,13 +141,9 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener {
 
             Date userSetTime = cal.getTime();
 
-            Date userSetTimeInGMT = calculator.dateToGMT(userSetTime);
-
-
 
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-            String dateTimeKey = Long.toString(userSetTimeInGMT.getTime());
-            /*prefs.edit().putLong(dateTimeKey, userSetTimeInGMT.getTime()).apply();*/
+            String dateTimeKey = Long.toString(userSetTime.getTime());
 
 
             String item = "";
@@ -163,24 +157,8 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener {
 
             prefs.edit().putString(dateTimeKey, item).apply();
 
-
-
-            long l = calculator.calculateDateDiff(calculator.dateToGMT(currentTime), userSetTimeInGMT);
-
-            //countdown timer
-            cTimer = new CountDownTimer(l, 1000) {
-
-                public void onTick(long millisUntilFinished) {
-                    String timeLeft = calculator.calcLeftTime(millisUntilFinished);
-                    /*editTitle.setText(timeLeft);*/
-                }
-                public void onFinish() {
-                    editTitle.setText(R.string.time_up);
-                }
-            };
-
-            cTimer.start();
-
+            Toast.makeText(getActivity(),R.string.activitySet,
+                    Toast.LENGTH_SHORT).show();
         }
         catch(Exception e) {
             Log.e("ScheduleFragment", e.getMessage());

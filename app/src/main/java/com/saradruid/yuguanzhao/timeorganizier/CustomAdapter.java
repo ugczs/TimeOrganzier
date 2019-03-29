@@ -1,6 +1,7 @@
 package com.saradruid.yuguanzhao.timeorganizier;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -102,11 +103,13 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
             holder.timer.cancel();
         }
 
-        Date listDate = list.getDate();
-        Date currentTime = calculator.dateToGMT(Calendar.getInstance().getTime());
-        Date userSetTimeInGMT = calculator.dateToGMT(listDate);
-        Log.i("cuTime", "current time:" + currentTime.toString() + "user set time" + userSetTimeInGMT.toString());
-        long l = calculator.calculateDateDiff(calculator.dateToGMT(currentTime), userSetTimeInGMT);
+        Date userSetTime = list.getDate();
+        Date currentTime = Calendar.getInstance().getTime();
+
+        Date a = calculator.dateToGMT(currentTime);
+        Log.i("cuTime", "current time: " + currentTime.toString() + " user set time: " + userSetTime.toString());
+
+        long l = calculator.calculateDateDiff(currentTime, userSetTime);
 
         holder.timer = new CountDownTimer(l, 1000) {
 
@@ -120,7 +123,13 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
         }.start();
 
         holder.description.setText(list.getDescription());
-        holder.date.setText(list.getDate().toString());
+
+
+        Resources res = holder.itemView.getContext().getResources();
+        Locale current = res.getConfiguration().locale;
+        DateFormat df = DateFormat.getDateInstance(DateFormat.FULL, current);
+        String date = df.format(list.getDate());
+        holder.date.setText(date);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -129,7 +138,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
         private TextView date;
         private CountDownTimer timer;
 
-        public ViewHolder(@NonNull View view) {
+        private ViewHolder(@NonNull View view) {
             super(view);
             this.description = view
                     .findViewById(R.id.l_description);

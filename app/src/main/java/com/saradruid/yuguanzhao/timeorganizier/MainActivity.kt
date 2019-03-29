@@ -61,19 +61,19 @@ class MainActivity : AppCompatActivity(), OnDataPass  {
             mDrawerLayout.addDrawerListener(
                     object : DrawerLayout.DrawerListener {
                         override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
-                            Log.i("Drawer ","position changed!");
+                            Log.i("Drawer ","position changed!")
                         }
 
                         override fun onDrawerOpened(drawerView: View) {
-                            Log.i("Drawer ","is opened!");
+                            Log.i("Drawer ","is opened!")
                         }
 
                         override fun onDrawerClosed(drawerView: View) {
-                            Log.i("Drawer ","is closed!");
+                            Log.i("Drawer ","is closed!")
                         }
 
                         override fun onDrawerStateChanged(newState: Int) {
-                            Log.i("Drawer ","motion state changed!");
+                            Log.i("Drawer ","motion state changed!")
                         }
                     }
             )
@@ -123,7 +123,7 @@ class MainActivity : AppCompatActivity(), OnDataPass  {
 
     private fun deleteAll() {
         val newFragment = ListFragment()
-        newFragment.cleanSharedPreferences(PreferenceManager.getDefaultSharedPreferences(baseContext));
+        newFragment.cleanSharedPreferences(PreferenceManager.getDefaultSharedPreferences(baseContext))
     }
 
     private fun TimeSettingView() {
@@ -149,5 +149,15 @@ class MainActivity : AppCompatActivity(), OnDataPass  {
         else {
             Log.i("onDataPass", "data is null")
         }
+    }
+
+    public override fun onResume() {
+        Log.e("resumed", "onResume of main activity")
+        super.onResume()
+    }
+
+    public override fun onPause() {
+        Log.e("paused", "OnPause of  main activity")
+        super.onPause()
     }
 }

@@ -1,4 +1,7 @@
 <resources>
+    <string name="enterActivity">Aktivität erstellen</string>
+    <string name="activity">Aktivität</string>
+    <string name="activitySet">Aktivität gesetzt</string>
     <string name="setTitle">Bitte einen Titel hinzufügen</string>
     <string name="time_up">Abgelaufen</string>
     <string name="set_time_err">Die eingestellte Zeit liegt in der Vergangenheit.</string>
