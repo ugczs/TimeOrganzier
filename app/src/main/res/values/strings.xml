@@ -1,4 +1,5 @@
 <resources>
+    <string name="settingTimeWrong">Set time is in the past.</string>
     <string name="enterActivity">Enter you activity</string>
     <string name="activity">Activity</string>
     <string name="activitySet">Activity Set</string>

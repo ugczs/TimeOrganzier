@@ -39,7 +39,6 @@ public class TimePicker extends Fragment {
                 Log.i("time", time + "!");
                 pickedHour = hourOfDay;
                 pickedMinute = minute;
-                Log.i("parent activity", getActivity().getClass().getSimpleName());
 
                 Time t = new Time(hourOfDay, minute);
                 passData(t);

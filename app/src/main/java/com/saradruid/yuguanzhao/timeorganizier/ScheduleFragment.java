@@ -142,6 +142,7 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener {
         try {
             String setTime = editTime.getText().toString();
             String setDate = editDate.getText().toString();
+            Date currentTime = Calendar.getInstance().getTime();
 
 
             Locale current = getResources().getConfiguration().locale;
@@ -163,18 +164,22 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener {
 
 
             String item = "";
-            if(editTitle.getText() == null) {
-                Toast.makeText(getActivity(),R.string.setTitle, Toast.LENGTH_SHORT).show();
-            }
-            else {
+
+            long timeDiff = calculator.calculateDateDiff(currentTime, userSetTime);
+
+            if(!editTitle.getText().toString().replaceAll("\\s+","").equals("")) {
                 String title = editTitle.getText().toString();
                 item = title + "#" + dateTimeKey;
+                prefs.edit().putString(dateTimeKey, item).apply();
+                Toast.makeText(getActivity(),R.string.activitySet,
+                        Toast.LENGTH_SHORT).show();
             }
-
-            prefs.edit().putString(dateTimeKey, item).apply();
-
-            Toast.makeText(getActivity(),R.string.activitySet,
-                    Toast.LENGTH_SHORT).show();
+            else if(timeDiff < 30000) {
+                Toast.makeText(getActivity(),R.string.settingTimeWrong, Toast.LENGTH_SHORT).show();
+            }
+            else {
+                Toast.makeText(getActivity(),R.string.setTitle, Toast.LENGTH_SHORT).show();
+            }
         }
         catch(Exception e) {
             Log.e("ScheduleFragment", e.getMessage());

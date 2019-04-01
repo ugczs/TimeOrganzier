@@ -64,7 +64,8 @@
         android:layout_centerHorizontal="true"
         android:layout_alignLeft = "@+id/editTime"
         android:gravity="center_horizontal"
-        android:layout_marginTop="30dip"/>
+        android:layout_marginTop="30dip"
+        />
 
     <Button
         android:id="@+id/buttonDate"

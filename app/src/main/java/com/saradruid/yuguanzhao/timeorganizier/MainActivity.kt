@@ -9,12 +9,10 @@ import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBar
 import android.support.v7.widget.Toolbar
 import android.util.Log
-import android.view.KeyEvent
 import android.view.MenuItem
 import android.view.View
 import com.saradruid.yuguanzhao.timeorganzier.R
 import java.util.*
-import android.view.KeyEvent.KEYCODE_BACK
 
 
 
@@ -129,10 +127,14 @@ class MainActivity : AppCompatActivity(), OnDataPass  {
     }
 
     private fun TimeSettingView() {
-        val newFragment = ScheduleFragment()
+
+        /*delte startScreen every time wenn ereignis hinzufügen geklickt wird*/
+
+
 
         val schedule = fragmentManager.findFragmentByTag("schedule")
         if (schedule == null) {
+            val newFragment = ScheduleFragment()
             val ft = fragmentManager.beginTransaction()
             ft.replace(R.id.content_frame, newFragment, "schedule").addToBackStack("startScreen").commit()
         }
