@@ -35,7 +35,7 @@ public class TimePicker extends Fragment {
         TimePickerDialog d = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(android.widget.TimePicker view, int hourOfDay, int minute) {
-                String time = "You picked the following time: "+hourOfDay+":"+minute;
+                String time = "You picked the following time: " + hourOfDay+":" + minute;
                 Log.i("time", time + "!");
                 pickedHour = hourOfDay;
                 pickedMinute = minute;

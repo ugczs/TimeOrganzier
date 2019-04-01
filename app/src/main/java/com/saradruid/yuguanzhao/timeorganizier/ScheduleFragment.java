@@ -167,15 +167,15 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener {
 
             long timeDiff = calculator.calculateDateDiff(currentTime, userSetTime);
 
-            if(!editTitle.getText().toString().replaceAll("\\s+","").equals("")) {
+            if(timeDiff < 30000) {
+                Toast.makeText(getActivity(),R.string.settingTimeWrong, Toast.LENGTH_SHORT).show();
+            }
+            else if(!editTitle.getText().toString().replaceAll("\\s+","").equals("")) {
                 String title = editTitle.getText().toString();
                 item = title + "#" + dateTimeKey;
                 prefs.edit().putString(dateTimeKey, item).apply();
                 Toast.makeText(getActivity(),R.string.activitySet,
                         Toast.LENGTH_SHORT).show();
-            }
-            else if(timeDiff < 30000) {
-                Toast.makeText(getActivity(),R.string.settingTimeWrong, Toast.LENGTH_SHORT).show();
             }
             else {
                 Toast.makeText(getActivity(),R.string.setTitle, Toast.LENGTH_SHORT).show();
