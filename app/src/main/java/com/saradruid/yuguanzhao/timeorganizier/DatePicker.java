@@ -98,7 +98,17 @@ public class DatePicker extends Fragment implements DatePickerDialog.OnDateSetLi
 
     @Override
     public void onPause() {
-        Log.e("paused", "OnPause of DatePicker");
+        Log.e("paused", "onPause of DatePicker");
         super.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        Log.e("destroy", "onDestroy of DatePicker");
+        Fragment datePicker = getFragmentManager().findFragmentByTag("datePicker");
+        if(datePicker != null) {
+            getFragmentManager().beginTransaction().remove(datePicker).commit();
+        }
+        super.onDestroy();
     }
 }

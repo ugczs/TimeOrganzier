@@ -116,9 +116,15 @@ class MainActivity : AppCompatActivity(), OnDataPass  {
     }*/
 
     private fun setDefaultView() {
-        val newFragment = ListFragment()
-        val ft = fragmentManager.beginTransaction()
-        ft.replace(R.id.content_frame, newFragment).commit()
+        val defaultView = fragmentManager.findFragmentByTag("defaultView")
+        if (defaultView == null) {
+            val listFragment = ListFragment()
+            val ft = fragmentManager.beginTransaction()
+            ft.replace(R.id.content_frame, listFragment, "defaultView").commit()
+        }
+        else {
+            Log.i("defaultView", "can not be duplicated!")
+        }
     }
 
     private fun deleteAll() {
@@ -127,16 +133,11 @@ class MainActivity : AppCompatActivity(), OnDataPass  {
     }
 
     private fun TimeSettingView() {
-
-        /*delte startScreen every time wenn ereignis hinzufügen geklickt wird*/
-
-
-
         val schedule = fragmentManager.findFragmentByTag("schedule")
         if (schedule == null) {
-            val newFragment = ScheduleFragment()
+            val scheduleFragment = ScheduleFragment()
             val ft = fragmentManager.beginTransaction()
-            ft.replace(R.id.content_frame, newFragment, "schedule").addToBackStack("startScreen").commit()
+            ft.replace(R.id.content_frame, scheduleFragment, "schedule").addToBackStack("startScreen").commit()
         }
         else {
             Log.i("schedule", "can not be duplicated!")

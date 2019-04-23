@@ -86,6 +86,16 @@ public class TimePicker extends Fragment {
         super.onPause();
     }
 
+    @Override
+    public void onDestroy() {
+        Log.e("destroy", "onDestroy of timePicker");
+        Fragment timePicker = getFragmentManager().findFragmentByTag("timePicker");
+        if(timePicker != null) {
+            getFragmentManager().beginTransaction().remove(timePicker).commit();
+        }
+        super.onDestroy();
+    }
+
     public void callParentMethod(int keyCode, KeyEvent event){
         getActivity().onKeyDown(keyCode, event);
     }

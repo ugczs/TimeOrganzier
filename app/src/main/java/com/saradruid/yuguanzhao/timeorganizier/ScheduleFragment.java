@@ -114,6 +114,20 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener {
         super.onPause();
     }
 
+    @Override
+    public void onDestroy() {
+        Log.e("destroy", "onDestroy of ScheduleFragment");
+        Fragment timePicker = getFragmentManager().findFragmentByTag("timePicker");
+        Fragment datePicker = getFragmentManager().findFragmentByTag("datePicker");
+        if(timePicker != null) {
+            getFragmentManager().beginTransaction().remove(timePicker).commit();
+        }
+        if(datePicker != null) {
+            getFragmentManager().beginTransaction().remove(datePicker).commit();
+        }
+        super.onDestroy();
+    }
+
     public void upDateTime(Time time) {
         editTime.setText(time.toString());
     }
