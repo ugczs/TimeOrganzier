@@ -51,15 +51,20 @@ public class ListFragment extends Fragment {
 
         for(Map.Entry<String,?> entry : keys.entrySet()){
             String[]  parts = entry.getValue().toString().split("#");
-            String name = parts[0];
+            String[] id = entry.getKey().split("#");
+            String itemId = id[1];
+            Integer itemNr = Integer.parseInt(itemId);
+
+            String description = parts[0];
             String time = parts[1];
+            Log.i("item: ", itemId + ": " + description );
             long l =   Long.parseLong(time);
 
             DateTime setTime = new DateTime( l ).withZone(DateTimeZone.getDefault());
 
             Log.i("set time is: ", setTime.toString());
 
-            ListItem i = new ListItem(name, "b1", setTime.toDate());
+            ListItem i = new ListItem(itemNr, description, setTime.toDate());
             list.add(i);
         }
         return list;

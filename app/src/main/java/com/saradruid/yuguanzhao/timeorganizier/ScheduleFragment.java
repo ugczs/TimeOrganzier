@@ -20,6 +20,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
+import java.util.TreeMap;
 
 
 public class ScheduleFragment extends Fragment implements View.OnClickListener {
@@ -185,9 +186,37 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener {
                 Toast.makeText(getActivity(),R.string.settingTimeWrong, Toast.LENGTH_SHORT).show();
             }
             else if(!editTitle.getText().toString().replaceAll("\\s+","").equals("")) {
+                int counter = 0;
+
+
+                //get the highest key
+                Map<String,?> map = prefs.getAll();
+                map = new TreeMap<>(map);
+                Map.Entry<String,?> maxEntryKey = null;
+                if(!map.entrySet().isEmpty()) {
+                    for(Map.Entry<String,?> entry : map.entrySet()){
+                        if (maxEntryKey == null || entry.getKey().split("#")[1].compareTo(maxEntryKey.getKey().split("#")[1]) > 0)
+                        {
+                            maxEntryKey = entry;
+                        }
+                    }
+                        counter = Integer.parseInt(maxEntryKey.getKey().split("#")[1]);
+                }
+
+
+                if(counter >= (Integer.MAX_VALUE - 1)) {
+                    counter = 0;
+                    counter++;
+                }
+                else {
+                    counter++;
+                }
+
+                String prefKey = dateTimeKey+"#"+String.valueOf(counter);
+
                 String title = editTitle.getText().toString();
                 item = title + "#" + dateTimeKey;
-                prefs.edit().putString(dateTimeKey, item).apply();
+                prefs.edit().putString(prefKey, item).apply();
                 Toast.makeText(getActivity(),R.string.activitySet,
                         Toast.LENGTH_SHORT).show();
             }

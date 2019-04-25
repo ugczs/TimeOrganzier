@@ -6,21 +6,21 @@ import java.util.Date;
 
 public class ListItem {
     private String description;
-    private String time;
     private Date date;
     private DateTime dateTime;
+    private int id;
 
-    public ListItem(String description, String time, Date date) {
+    public ListItem(int id, String description, Date date) {
         super();
+        this.id = id;
         this.description = description;
-        this.time = time;
         this.date = date;
     }
 
-    public ListItem(String description, String time, DateTime dateTime) {
+    public ListItem(int id, String description, DateTime dateTime) {
         super();
+        this.id = id;
         this.description = description;
-        this.time = time;
         this.dateTime = dateTime;
     }
 
@@ -28,20 +28,25 @@ public class ListItem {
         return description;
     }
 
-    public String getTime() {
-        return time;
-    }
 
     public Date getDate() {
         return date;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public DateTime getDateTime() {
+        return dateTime;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public void setDate(Date date) {
