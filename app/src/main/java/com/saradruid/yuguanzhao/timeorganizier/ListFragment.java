@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.saradruid.yuguanzhao.timeorganzier.R;
 
 import org.joda.time.DateTime;
@@ -22,14 +21,21 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class ListFragment extends Fragment {
+    private ArrayList<ListItem> listItems;
+    private CustomAdapter adapter;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        ArrayList<ListItem> listItems = getListItems();
+        listItems = getListItems();
         View rootView = inflater.inflate(R.layout.list_fragment, container, false);
 
         RecyclerView rv = rootView.findViewById(R.id.countDownList);
-        rv.setAdapter(new CustomAdapter(getActivity(), listItems));
+        adapter = new CustomAdapter(getActivity(), listItems);
+        rv.setAdapter(adapter);
         rv.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+
+
 
         return rootView;
     }
@@ -66,13 +72,4 @@ public class ListFragment extends Fragment {
         prefs.edit().clear().commit();
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
 }

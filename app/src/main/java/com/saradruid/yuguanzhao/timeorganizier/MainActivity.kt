@@ -91,30 +91,6 @@ class MainActivity : AppCompatActivity(), OnDataPass  {
         }
     }
 
-    /*private fun openTimeSelector() {
-        val fragment = TimePicker()
-        val fragmentManager = fragmentManager
-        fragmentManager.beginTransaction()
-                .add(R.id.content_frame, fragment)
-                .commit()
-    }
-
-    private fun openCountDownList() {
-        val fragment = ListFragment()
-        val fragmentManager = fragmentManager
-        fragmentManager.beginTransaction()
-                .replace(R.id.content_frame, fragment)
-                .commit()
-    }
-*/
-    /*private fun openDateSelector() {
-        val fragment = DatePicker()
-        val fragmentManager = fragmentManager
-        fragmentManager.beginTransaction()
-                .add(R.id.content_frame, fragment)
-                .commit()
-    }*/
-
     private fun setDefaultView() {
         val defaultView = fragmentManager.findFragmentByTag("defaultView")
         if (defaultView == null) {
@@ -173,12 +149,5 @@ class MainActivity : AppCompatActivity(), OnDataPass  {
         Log.e("paused", "OnPause of  main activity")
         super.onPause()
     }
-
-    /*override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            return false
-        }
-        return super.onKeyDown(keyCode, event)
-    }*/
 
 }
