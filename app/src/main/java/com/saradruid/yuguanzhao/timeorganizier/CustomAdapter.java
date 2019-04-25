@@ -1,37 +1,31 @@
 package com.saradruid.yuguanzhao.timeorganizier;
 
-import android.app.ListActivity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
-
 
 import com.saradruid.yuguanzhao.timeorganzier.R;
 
 import java.text.DateFormat;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder> {
     private Calculator calculator = new Calculator();
     private Context context;
-    private List<ListItem> list;
+    private TimeList list;
 
-    public CustomAdapter(@NonNull Context context, ArrayList<ListItem> list) {
+    public CustomAdapter(@NonNull Context context, TimeList list) {
         this.context = context;
         this.list = list;
     }
@@ -54,13 +48,13 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull final CustomAdapter.ViewHolder holder, int position) {
-        ListItem list = this.list.get(position);
+        ListItem item = this.list.get(position);
 
         if (holder.timer != null) {
             holder.timer.cancel();
         }
 
-        Date userSetTime = list.getDate();
+        Date userSetTime = item.getDate();
         Date currentTime = Calendar.getInstance().getTime();
 
         Date a = calculator.dateToGMT(currentTime);
@@ -79,13 +73,13 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
             }
         }.start();
 
-        holder.description.setText(list.getDescription());
+        holder.description.setText(item.getDescription());
 
 
         Resources res = holder.itemView.getContext().getResources();
         Locale current = res.getConfiguration().locale;
         DateFormat df = DateFormat.getDateInstance(DateFormat.FULL, current);
-        String date = df.format(list.getDate());
+        String date = df.format(item.getDate());
         holder.date.setText(date);
     }
 

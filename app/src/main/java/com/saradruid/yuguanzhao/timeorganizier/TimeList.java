@@ -23,4 +23,12 @@ public class TimeList {
     public ArrayList<ListItem> getListItems() {
         return listItems;
     }
+
+    public int size() {
+        return listItems.size();
+    }
+
+    public ListItem get(int i) {
+        return listItems.get(i);
+    }
 }

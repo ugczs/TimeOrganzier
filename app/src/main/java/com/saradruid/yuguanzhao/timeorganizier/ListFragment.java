@@ -15,13 +15,11 @@ import com.saradruid.yuguanzhao.timeorganzier.R;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 
-
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
 public class ListFragment extends Fragment {
-    private ArrayList<ListItem> listItems;
+    private TimeList listItems;
     private CustomAdapter adapter;
 
     @Override
@@ -40,13 +38,12 @@ public class ListFragment extends Fragment {
         return rootView;
     }
 
-    private ArrayList<ListItem> getListItems(){
+    private TimeList getListItems(){
 
-        ArrayList list = new ArrayList<ListItem>();
+        TimeList list = new TimeList();
 
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        /*cleanSharedPreferences(prefs);*/
         //get all items from sharedPref
         Map<String,?> keys = prefs.getAll();
         //sort items in list
