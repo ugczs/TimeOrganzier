@@ -47,8 +47,10 @@ public class ListFragment extends Fragment {
 
                 int id = listItems.findItemByPosition(position).getId();
 
-
+                Log.i("position is",String.valueOf(position));
+                Log.i("id is ",String.valueOf(id));
                 listItems.remove(position);
+                //things in sharedPref need also be deleted
                 adapter.notifyDataSetChanged();
             }
         };
