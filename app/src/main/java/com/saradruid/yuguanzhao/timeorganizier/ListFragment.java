@@ -16,8 +16,11 @@ import com.saradruid.yuguanzhao.timeorganzier.R;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 
+import java.util.Date;
 import java.util.Map;
 import java.util.TreeMap;
+
+import static java.lang.String.valueOf;
 
 public class ListFragment extends Fragment {
     private TimeList listItems;
@@ -47,10 +50,17 @@ public class ListFragment extends Fragment {
 
                 int id = listItems.findItemByPosition(position).getId();
 
-                Log.i("position is",String.valueOf(position));
-                Log.i("id is ",String.valueOf(id));
+                Log.i("position is", valueOf(position));
+                Log.i("id is ", valueOf(id));
+                //delete item from sharedPref
+                if(listItems != null) {
+                    Date dateTime = listItems.findItemByPosition(position).getDate();
+                    String dateInString = String.valueOf(dateTime.getTime());
+                    String idInString = valueOf(id);
+                    deleteItemFromSharedPref(dateInString + "#" + idInString);
+                    Log.i("deleted key", dateInString + "#" + idInString);
+                }
                 listItems.remove(position);
-                //things in sharedPref need also be deleted
                 adapter.notifyDataSetChanged();
             }
         };
@@ -60,6 +70,11 @@ public class ListFragment extends Fragment {
 
 
         return rootView;
+    }
+
+    private void deleteItemFromSharedPref(String key) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        prefs.edit().remove(key).apply();
     }
 
     private TimeList getListItems(){
@@ -95,7 +110,7 @@ public class ListFragment extends Fragment {
     }
 
     public void cleanSharedPreferences(SharedPreferences prefs) {
-        prefs.edit().clear().commit();
+        prefs.edit().clear().apply();
     }
 
 }
