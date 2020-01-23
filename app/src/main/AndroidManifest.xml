@@ -18,9 +18,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.saradruid.yuguanzhao.timeorganizier.DatePicker" />
-        <activity android:name=".HourPicker" />
-        <activity android:name="com.saradruid.yuguanzhao.timeorganizier.TimePicker"></activity>
     </application>
 
 </manifest>
