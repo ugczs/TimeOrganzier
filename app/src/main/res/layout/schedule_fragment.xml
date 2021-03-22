@@ -33,15 +33,16 @@
         android:id="@+id/editTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="5"
-        android:inputType="time"
-        android:focusable="false"
         android:layout_below="@+id/editTitle"
+        android:layout_alignLeft="@+id/editTitle"
         android:layout_centerHorizontal="true"
-        android:layout_alignLeft = "@+id/editTitle"
+        android:layout_marginLeft="-15dp"
+        android:layout_marginTop="45dp"
+        android:background="@android:color/transparent"
+        android:ems="5"
+        android:focusable="false"
         android:gravity="center_horizontal"
-        android:layout_marginTop="30dip"
-        />
+        android:inputType="time" />
 
     <Button
         android:id="@+id/buttonTime"
@@ -59,26 +60,27 @@
         android:id="@+id/editDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/editTime"
+        android:layout_alignLeft="@+id/editTime"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="52dp"
+        android:background="@android:color/transparent"
         android:ems="5"
         android:focusable="false"
-        android:inputType="date"
-        android:layout_below="@+id/editTime"
-        android:layout_centerHorizontal="true"
-        android:layout_alignLeft = "@+id/editTime"
         android:gravity="center_horizontal"
-        android:layout_marginTop="30dip"
-        />
+        android:inputType="date" />
 
     <Button
         android:id="@+id/buttonDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/buttonTime"
+        android:layout_alignRight="@+id/buttonTime"
+        android:layout_alignLeft="@+id/buttonTime"
+        android:layout_marginTop="30dip"
         android:layout_toRightOf="@+id/editDate"
-        android:text="@string/set_date"
-        android:layout_alignRight = "@+id/buttonTime"
-        android:layout_marginLeft="10dip"
-        android:layout_marginTop="30dip"/>
+        android:text="@string/set_date" />
 
     <Button
         android:id="@+id/buttonOk"
