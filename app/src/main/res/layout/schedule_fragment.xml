@@ -36,7 +36,7 @@
         android:layout_below="@+id/editTitle"
         android:layout_alignLeft="@+id/editTitle"
         android:layout_centerHorizontal="true"
-        android:layout_marginLeft="-15dp"
+        android:layout_marginLeft="0dp"
         android:layout_marginTop="45dp"
         android:background="@android:color/transparent"
         android:ems="5"
@@ -53,7 +53,7 @@
         android:text="@string/set_time"
         android:layout_alignRight = "@+id/editTitle"
         android:layout_marginLeft="10dip"
-        android:layout_marginTop="30dip"
+        android:layout_marginTop="35dip"
         />
 
     <EditText
@@ -64,7 +64,7 @@
         android:layout_alignLeft="@+id/editTime"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="0dp"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="65dp"
         android:background="@android:color/transparent"
         android:ems="5"
         android:focusable="false"

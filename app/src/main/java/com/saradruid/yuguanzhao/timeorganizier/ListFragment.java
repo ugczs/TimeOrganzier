@@ -20,6 +20,7 @@ import java.util.Date;
 import java.util.Map;
 import java.util.TreeMap;
 
+import static android.support.v7.widget.helper.ItemTouchHelper.*;
 import static java.lang.String.valueOf;
 
 public class ListFragment extends Fragment {
@@ -36,22 +37,23 @@ public class ListFragment extends Fragment {
         rv.setAdapter(adapter);
         rv.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT | ItemTouchHelper.DOWN | ItemTouchHelper.UP) {
+        SimpleCallback simpleItemTouchCallback = new SimpleCallback(0,  LEFT) {
 
             @Override
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
                 return false;
             }
 
+
+
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
                 //Remove swiped item from list and notify the RecyclerView
                 int position = viewHolder.getAdapterPosition();
-
                 int id = listItems.findItemByPosition(position).getId();
 
-                Log.i("position is", valueOf(position));
-                Log.i("id is ", valueOf(id));
+                Log.i("position is: ", valueOf(position));
+                Log.i("id is: ", valueOf(id));
                 //delete item from sharedPref
                 if(listItems != null) {
                     Date dateTime = listItems.findItemByPosition(position).getDate();

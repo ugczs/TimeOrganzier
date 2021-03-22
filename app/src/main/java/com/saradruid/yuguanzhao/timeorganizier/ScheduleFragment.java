@@ -187,8 +187,6 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener {
             }
             else if(!editTitle.getText().toString().replaceAll("\\s+","").equals("")) {
                 int counter = 0;
-
-
                 //get the highest key
                 Map<String,?> map = prefs.getAll();
                 map = new TreeMap<>(map);

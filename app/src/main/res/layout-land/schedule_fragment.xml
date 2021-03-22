@@ -37,7 +37,9 @@
         android:layout_below="@+id/editTitle"
         android:layout_centerHorizontal="true"
         android:layout_alignLeft = "@+id/editTitle"
+        android:layout_alignBaseline="@id/buttonTime"
         android:layout_marginTop="20dip"
+        android:background="@android:color/transparent"
         />
 
     <Button
@@ -62,7 +64,10 @@
         android:layout_below="@+id/editTime"
         android:layout_centerHorizontal="true"
         android:layout_alignLeft = "@+id/editTime"
-        android:layout_marginTop="20dip"/>
+        android:layout_alignBaseline="@id/buttonDate"
+        android:layout_marginTop="20dip"
+        android:background="@android:color/transparent"
+        />
 
     <Button
         android:id="@+id/buttonDate"
